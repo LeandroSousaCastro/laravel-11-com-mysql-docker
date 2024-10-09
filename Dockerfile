@@ -1,4 +1,4 @@
-# Usar a imagem oficial do PHP 8.4 com FPM
+# Usar a imagem oficial do PHP 8.3 com FPM
 FROM php:8.3.12-fpm
 
 # Instalar dependências do sistema
@@ -20,11 +20,12 @@ WORKDIR /var/www
 # Copiar o projeto atual para o diretório de trabalho do container
 COPY . /var/www
 
-# Instalar dependências do Composer
-RUN composer install
-
 # Ajustar permissões
 RUN chown -R www-data:www-data /var/www
+
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Expor a porta 9000 que é usada pelo PHP-FPM
 EXPOSE 9000
